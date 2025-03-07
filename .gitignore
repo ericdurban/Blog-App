@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# Logs
+
+
+# Environment variables
+.env
+
+# IDE Files
+
+# Database files
+
+# Other files
+Archive/

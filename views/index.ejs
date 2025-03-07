@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Application</title>
+  <link rel="stylesheet" href="Styles/content.css">
+</head>
+<body>
+  
+  <%- include("partials/header.ejs") %>
+
+
+  <h1>Welcome to the Urban Blog</h1>
+
+  <p>
+    Where ideas, stories, and perspectives come together to inspire and connect</p>
+
+  <%# I need to include section where posts from the new-post page are dumped here and stored. %>
+  <section class="blogs">
+    <% if (posts && posts.length) { %>
+      <ul>
+        <% posts.forEach((post, index) => { %>
+          <!-- TEST -->
+          <li class="blog-post-submission">
+            <h2><%= post.title %></h2>
+
+            <% if (post.image) { %>
+              <img src="<%= post.image %>" alt="Post Image" style="max-width: 100%; height: auto;">
+            <% } %>
+
+           <!-- Button to toggle the collapse -->
+          <button class="collapse-toggle" onclick="toggleCollapse(this)">Read More</button>
+          
+          <!-- Collapsible content -->
+          <div class="collapse-content">
+            <%- post.content %>
+          </div>
+            <small>Author: <%= post.author %> | Date: <%= post.date %></small>
+
+            <!-- Delete Button -->
+          <form action="/delete-post/<%= index %>" method="POST" style="display:inline;">
+            <button type="submit" class="delete-button">Delete</button>
+          </form>
+        </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No posts available.</p>
+    <% } %>
+  </section>
+
+  <script>
+    function toggleCollapse(button) {
+      const content = button.nextElementSibling;
+  
+      // Toggle between showing and hiding the content
+      if (content.style.display === "none" || content.style.display === "") {
+        content.style.display = "block";  // Show the content
+        button.textContent = "Read Less"; // Change button text to "Read Less"
+      } else {
+        content.style.display = "none";  // Hide the content
+        button.textContent = "Read More"; // Change button text back to "Read More"
+      }
+    }
+  </script>
+
+  <%- include("partials/footer.ejs") %>
+
+</body>
+</html>
+
